@@ -24,7 +24,7 @@ export default function MobileNav({
           key={link.href}
           href={link.href}
           onClick={onClose}
-          className={`text-xl font-medium transition-colors ${
+          className={`text-xl font-medium tracking-wider transition-colors ${
             pathname === link.href
               ? "text-[#5b21b6]"
               : "text-slate-600 hover:text-[#5b21b6]"

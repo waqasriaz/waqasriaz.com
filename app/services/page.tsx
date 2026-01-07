@@ -538,7 +538,7 @@ export default function ServicesPage() {
                     </span>
                     <span className="text-slate-700">
                       <strong className="text-slate-900">Founder Kickstart</strong>{" "}
-                      - Strategy, planning, and roadmap ($1,000-$3,500)
+                      - Strategy, planning, and roadmap
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
@@ -559,7 +559,7 @@ export default function ServicesPage() {
                       <strong className="text-slate-900">
                         Built with Founder
                       </strong>{" "}
-                      - Full implementation ($5,000-$25,000+)
+                      - Full implementation
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
@@ -580,7 +580,7 @@ export default function ServicesPage() {
                       <strong className="text-slate-900">
                         Advisory Retainer
                       </strong>{" "}
-                      - Ongoing support (from $499/month)
+                      - Ongoing support
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
@@ -665,7 +665,7 @@ export default function ServicesPage() {
                 </h2>
                 <p className="text-lg text-slate-600 leading-relaxed mb-8">
                   Strategic guidance and technical advisory for your digital
-                  projects. Benefit from 10+ years of experience building
+                  projects. Benefit from 14+ years of experience building
                   successful products.
                 </p>
                 <Link href="/contact?service=consulting" className="btn-neo btn-neo-primary">

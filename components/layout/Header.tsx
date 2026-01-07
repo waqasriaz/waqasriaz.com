@@ -114,7 +114,7 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-sm font-medium transition-colors ${
+                  className={`text-sm font-medium tracking-wider transition-colors ${
                     pathname === link.href
                       ? "text-[#5b21b6]"
                       : "text-slate-600 hover:text-[#5b21b6]"
