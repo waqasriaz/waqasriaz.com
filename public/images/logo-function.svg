@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 175 40" width="175" height="40">
+  <defs>
+    <linearGradient id="bracketGrad5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#a855f7"/>
+    </linearGradient>
+  </defs>
+  <text x="0" y="28" fill="#1a1a2e" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="700">waqasRiaz</text>
+  <text x="108" y="28" fill="url(#bracketGrad5)" font-family="Monaco, Consolas, monospace" font-size="22" font-weight="400">()</text>
+</svg>
