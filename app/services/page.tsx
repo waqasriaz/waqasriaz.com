@@ -15,14 +15,35 @@ export default function ServicesPage() {
       <Header />
       <main>
         {/* Hero Section */}
-        <section className="relative min-h-[50vh] flex items-center pt-32 pb-16 bg-[#c4b5fd]/20 overflow-hidden">
-          {/* Decorative blur elements */}
-          <div className="hero-blob absolute w-96 h-96 bg-[#c4b5fd]/30 rounded-full -top-48 -left-48 blur-3xl" />
-          <div className="hero-blob absolute w-80 h-80 bg-[#c4b5fd]/30 rounded-full -bottom-40 -right-40 blur-3xl" style={{ animationDelay: '2s' }} />
-          <div className="hero-blob absolute w-64 h-64 bg-[#c4b5fd]/30 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 blur-3xl" style={{ animationDelay: '4s' }} />
+        <section
+          className="relative min-h-[50vh] flex items-center pt-32 pb-16 overflow-hidden"
+          style={{
+            background: 'linear-gradient(135deg, rgba(196, 181, 253, 0.15) 0%, rgba(255, 255, 255, 0.95) 50%, rgba(196, 181, 253, 0.1) 100%)'
+          }}
+        >
+          {/* Decorative blur elements with gradients */}
+          <div
+            className="hero-blob absolute w-96 h-96 rounded-full -top-48 -left-48 blur-3xl"
+            style={{ background: 'linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%)', opacity: 0.25 }}
+          />
+          <div
+            className="hero-blob absolute w-80 h-80 rounded-full -bottom-40 -right-40 blur-3xl"
+            style={{ background: 'linear-gradient(135deg, #a78bfa 0%, #c4b5fd 100%)', opacity: 0.2, animationDelay: '2s' }}
+          />
+          <div
+            className="hero-blob absolute w-64 h-64 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 blur-3xl"
+            style={{ background: 'linear-gradient(135deg, #c4b5fd 0%, #ddd6fe 100%)', opacity: 0.15, animationDelay: '4s' }}
+          />
+
+          {/* Subtle dot grid pattern */}
+          <div className="hero-grid opacity-40" />
+
+          {/* Subtle code decoration */}
+          <div className="tech-bracket bracket-left opacity-50">&lt;/&gt;</div>
+          <div className="tech-bracket bracket-right opacity-50">{'{}'}</div>
 
           <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
-            <span className="hero-animate hero-animate-1 inline-block text-sm font-semibold text-[#5b21b6] bg-white/80 backdrop-blur px-4 py-1.5 rounded-full mb-6 shadow-sm">
+            <span className="hero-animate hero-animate-1 badge-glow inline-block text-sm font-semibold text-[#5b21b6] bg-white/80 backdrop-blur px-4 py-1.5 rounded-full mb-6 shadow-sm">
               What I Offer
             </span>
             <h1 className="hero-animate hero-animate-2 text-4xl md:text-5xl font-bold text-slate-900 mb-6">
