@@ -17,18 +17,18 @@ export default function ServicesPage() {
         {/* Hero Section */}
         <section className="relative min-h-[50vh] flex items-center pt-32 pb-16 bg-[#c4b5fd]/20 overflow-hidden">
           {/* Decorative blur elements */}
-          <div className="absolute w-96 h-96 bg-[#c4b5fd]/30 rounded-full -top-48 -left-48 blur-3xl" />
-          <div className="absolute w-80 h-80 bg-[#c4b5fd]/30 rounded-full -bottom-40 -right-40 blur-3xl" />
-          <div className="absolute w-64 h-64 bg-[#c4b5fd]/30 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 blur-3xl" />
+          <div className="hero-blob absolute w-96 h-96 bg-[#c4b5fd]/30 rounded-full -top-48 -left-48 blur-3xl" />
+          <div className="hero-blob absolute w-80 h-80 bg-[#c4b5fd]/30 rounded-full -bottom-40 -right-40 blur-3xl" style={{ animationDelay: '2s' }} />
+          <div className="hero-blob absolute w-64 h-64 bg-[#c4b5fd]/30 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 blur-3xl" style={{ animationDelay: '4s' }} />
 
           <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
-            <span className="inline-block text-sm font-semibold text-[#5b21b6] bg-white/80 backdrop-blur px-4 py-1.5 rounded-full mb-6 shadow-sm">
+            <span className="hero-animate hero-animate-1 inline-block text-sm font-semibold text-[#5b21b6] bg-white/80 backdrop-blur px-4 py-1.5 rounded-full mb-6 shadow-sm">
               What I Offer
             </span>
-            <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+            <h1 className="hero-animate hero-animate-2 text-4xl md:text-5xl font-bold text-slate-900 mb-6">
               Services
             </h1>
-            <p className="text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">
+            <p className="hero-animate hero-animate-3 text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">
               From custom web applications to mobile apps and WordPress
               solutions, I offer comprehensive development services to bring
               your ideas to life.

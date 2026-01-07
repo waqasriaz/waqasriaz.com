@@ -111,28 +111,28 @@ export default function HouzezPage() {
         {/* Hero Section */}
         <section className="relative pt-32 pb-20 bg-[#c4b5fd]/20 overflow-hidden">
           {/* Decorative blur elements */}
-          <div className="absolute w-96 h-96 bg-[#c4b5fd]/30 rounded-full -top-48 -left-48 blur-3xl" />
-          <div className="absolute w-80 h-80 bg-[#c4b5fd]/30 rounded-full -bottom-40 -right-40 blur-3xl" />
+          <div className="hero-blob absolute w-96 h-96 bg-[#c4b5fd]/30 rounded-full -top-48 -left-48 blur-3xl" />
+          <div className="hero-blob absolute w-80 h-80 bg-[#c4b5fd]/30 rounded-full -bottom-40 -right-40 blur-3xl" style={{ animationDelay: '2s' }} />
 
           <div className="max-w-6xl mx-auto px-6 relative z-10">
             <div className="text-left max-w-3xl">
-              <span className="inline-block text-sm font-semibold text-[#5b21b6] bg-[#c4b5fd]/30 px-4 py-1.5 rounded-full mb-6">
+              <span className="hero-animate hero-animate-1 inline-block text-sm font-semibold text-[#5b21b6] bg-[#c4b5fd]/30 px-4 py-1.5 rounded-full mb-6">
                 Limited Monthly Capacity
               </span>
-              <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+              <h1 className="hero-animate hero-animate-2 text-4xl md:text-5xl font-bold text-slate-900 mb-6">
                 Work with the Houzez Founder
               </h1>
-              <p className="text-lg text-slate-600 leading-relaxed mb-8">
+              <p className="hero-animate hero-animate-3 text-lg text-slate-600 leading-relaxed mb-8">
                 Get direct access to the creator of Houzez - the world&apos;s #1
                 real estate WordPress theme. Build your real estate website the
                 right way, from day one.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="hero-animate hero-animate-4 flex flex-col sm:flex-row gap-4">
                 <Link href="/houzez-apply" className="btn-neo btn-neo-primary">
                   Apply to Work Together
                 </Link>
               </div>
-              <p className="text-sm text-slate-500 mt-4">
+              <p className="hero-animate hero-animate-5 text-sm text-slate-500 mt-4">
                 Limited capacity: 2 build projects/month and 5 advisory clients.
               </p>
             </div>

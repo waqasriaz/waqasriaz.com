@@ -18,13 +18,13 @@ export default function AboutPage() {
         {/* Hero Section */}
         <section className="relative pt-32 pb-20 bg-[#c4b5fd]/20 overflow-hidden">
           {/* Decorative blur elements */}
-          <div className="absolute w-96 h-96 bg-[#c4b5fd]/30 rounded-full -top-48 -left-48 blur-3xl" />
-          <div className="absolute w-80 h-80 bg-[#c4b5fd]/30 rounded-full -bottom-40 -right-40 blur-3xl" />
+          <div className="hero-blob absolute w-96 h-96 bg-[#c4b5fd]/30 rounded-full -top-48 -left-48 blur-3xl" />
+          <div className="hero-blob absolute w-80 h-80 bg-[#c4b5fd]/30 rounded-full -bottom-40 -right-40 blur-3xl" style={{ animationDelay: '2s' }} />
 
           <div className="max-w-6xl mx-auto px-6 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-24 items-center">
               {/* Photo */}
-              <div className="flex justify-center lg:justify-start">
+              <div className="hero-animate hero-animate-1 flex justify-center lg:justify-start">
                 <Image
                   src="/images/profile-1.jpeg"
                   alt="Waqas Riaz - Software Developer"
@@ -36,17 +36,17 @@ export default function AboutPage() {
               </div>
               {/* Text */}
               <div className="text-center lg:text-left">
-                <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+                <h1 className="hero-animate hero-animate-2 text-4xl md:text-5xl font-bold text-slate-900 mb-4">
                   Waqas Riaz
                 </h1>
-                <p className="text-xl font-semibold text-[#5b21b6] mb-4">
+                <p className="hero-animate hero-animate-3 text-xl font-semibold text-[#5b21b6] mb-4">
                   Software Developer & Product Builder
                 </p>
-                <p className="text-lg text-slate-600 leading-relaxed mb-8">
+                <p className="hero-animate hero-animate-4 text-lg text-slate-600 leading-relaxed mb-8">
                   Building digital products that help businesses grow. Creator
                   of Houzez and Homey, powering 60,000+ websites worldwide.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
+                <div className="hero-animate hero-animate-5 flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
                   <Link href="/contact" className="btn-neo btn-neo-primary">
                     Work With Me
                   </Link>
