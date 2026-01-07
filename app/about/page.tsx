@@ -76,33 +76,61 @@ export default function AboutPage() {
                             My Story
                         </h2>
                         <p className="text-xl text-slate-700 leading-relaxed mb-6">
-                            I&apos;ve been building software for over a decade,
-                            driven by a passion for creating products that solve
-                            real problems.
+                            I&apos;ve spent the last <strong>14 years</strong>{' '}
+                            building digital products with a simple belief: the
+                            best solutions are created when technology is guided
+                            by real understanding, care, and long-term thinking.
                         </p>
                         <p className="text-lg text-slate-600 leading-relaxed mb-6">
-                            My journey started with freelance web development,
-                            where I worked with clients across various
-                            industries. Over time, I noticed a gap in the market
-                            for specialized WordPress solutions - particularly
-                            in the real estate sector.
+                            My journey began with hands-on client work—listening
+                            closely, solving real problems, and learning what
+                            businesses truly need to grow. Those early years
+                            shaped how I approach product building today: focus
+                            on clarity, respect the end user, and never
+                            compromise on quality or sustainability.
                         </p>
                         <p className="text-lg text-slate-600 leading-relaxed mb-6">
-                            In 2015, I created Houzez - a WordPress theme
-                            designed specifically for real estate professionals.
-                            What started as a solution to a common problem
-                            quickly became an industry standard, now powering
-                            over 54,000 websites across 50+ countries. I
-                            followed this with Homey, a premium theme for
-                            vacation rentals.
+                            Over time, one pattern became clear to me. In the
+                            real estate industry, professionals were often
+                            forced to adapt their businesses to tools that
+                            weren&apos;t designed for their workflows or goals.
+                            In <strong>2016</strong>, I decided to change that
+                            and launched <strong>Houzez</strong>—a product built
+                            specifically for real estate professionals, grounded
+                            in real-world use cases rather than assumptions.
+                        </p>
+                        <p className="text-lg text-slate-600 leading-relaxed mb-6">
+                            What started as a focused idea evolved into
+                            something far larger than I initially imagined.
+                            Today,{' '}
+                            <strong>
+                                Houzez is trusted by more than 54,000 clients
+                                worldwide
+                            </strong>
+                            , powering real estate businesses of all sizes.
+                            Building and supporting a product at this scale has
+                            been both humbling and deeply rewarding, and it
+                            continues to shape how I think about responsibility,
+                            craftsmanship, and user trust. I later expanded this
+                            vision with <strong>Homey</strong>, a premium
+                            solution for vacation rental businesses.
+                        </p>
+                        <p className="text-lg text-slate-600 leading-relaxed mb-6">
+                            Today, I continue to design and build products while
+                            working directly with founders and businesses who
+                            value thoughtful execution and long-term impact.
+                            Whether it&apos;s a custom platform, a mobile
+                            application, or a tailored WordPress solution, I
+                            bring the same mindset that guided Houzez from day
+                            one—build with intention, think beyond launch, and
+                            focus on lasting value.
                         </p>
                         <p className="text-lg text-slate-600 leading-relaxed">
-                            Today, I continue to build products and offer
-                            development services to businesses that want to
-                            create something exceptional. Whether it&apos;s a
-                            custom web application, mobile app, or WordPress
-                            solution, I bring the same attention to detail and
-                            commitment to quality that made Houzez successful.
+                            I believe truly great products are not rushed. They
+                            are carefully built, continuously refined, and
+                            shaped by the people who use them. That belief
+                            guides everything I create and every collaboration I
+                            choose.
                         </p>
                     </div>
                 </section>
