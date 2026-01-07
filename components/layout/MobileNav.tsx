@@ -18,7 +18,7 @@ export default function MobileNav({
   if (!isOpen) return null;
 
   return (
-    <div className="md:hidden fixed inset-0 bg-white z-40 flex flex-col items-center justify-center gap-6 pt-20">
+    <div className="md:hidden fixed inset-0 bg-white z-40 flex flex-col items-center justify-center gap-6">
       {navLinks.map((link) => (
         <Link
           key={link.href}

@@ -22,7 +22,7 @@ export default function AboutPage() {
           <div className="hero-blob absolute w-80 h-80 bg-[#c4b5fd]/30 rounded-full -bottom-40 -right-40 blur-3xl" style={{ animationDelay: '2s' }} />
 
           <div className="max-w-6xl mx-auto px-6 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-24 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-8 lg:gap-24 items-center">
               {/* Photo */}
               <div className="hero-animate hero-animate-1 flex justify-center lg:justify-start">
                 <Image
@@ -30,7 +30,7 @@ export default function AboutPage() {
                   alt="Waqas Riaz - Software Developer"
                   width={400}
                   height={400}
-                  className="w-full max-w-[400px] h-auto rounded-2xl border-4 border-white shadow-2xl shadow-slate-900/10"
+                  className="w-full max-w-[280px] sm:max-w-[340px] md:max-w-[400px] h-auto rounded-2xl border-4 border-white shadow-2xl shadow-slate-900/10"
                   priority
                 />
               </div>
