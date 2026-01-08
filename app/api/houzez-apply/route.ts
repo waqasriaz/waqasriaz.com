@@ -32,7 +32,8 @@ const applicationSchema = z
         "10000-25000",
         "25000+",
       ])
-      .optional(), // Budget is optional - only required for "not-sure"
+      .optional()
+      .or(z.literal("")), // Budget is optional - only required for "not-sure"
     features: z.array(z.string()).optional(),
     otherFeature: z.string().optional(),
     problem: z.string().min(10, "Please describe your problem in more detail"),
@@ -75,9 +76,15 @@ export async function POST(request: NextRequest) {
     // Connect to database
     await connectDB();
 
+    // Convert empty strings to undefined for MongoDB enum fields
+    const dataToSave = {
+      ...validatedData,
+      budget: validatedData.budget || undefined,
+    };
+
     // Create application
     const application = await HouzezApplication.create({
-      ...validatedData,
+      ...dataToSave,
       status: "new",
       emailSent: false,
     });

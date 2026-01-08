@@ -38,7 +38,7 @@ export const metadata: Metadata = {
       "Creator of Houzez and Homey WordPress themes, powering 60,000+ websites worldwide.",
     images: [
       {
-        url: "/images/og-image.png",
+        url: "/images/waqasriaz.jpeg",
         width: 1200,
         height: 630,
         alt: "Waqas Riaz - Software Developer",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Waqas Riaz - Software Developer",
     description: "Creator of Houzez & Homey. Building digital products that scale.",
-    images: ["/images/og-image.png"],
+    images: ["/images/waqasriaz.jpeg"],
   },
   robots: {
     index: true,

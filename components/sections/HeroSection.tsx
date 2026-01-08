@@ -180,7 +180,7 @@ export default function HeroSection() {
                             {/* Profile image */}
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
-                                src="/images/profile-3.jpeg"
+                                src="/images/waqasriaz.jpeg"
                                 alt="Waqas Riaz - Software Developer"
                                 className="hero-image-animate w-56 h-56 sm:w-72 sm:h-72 md:w-[26rem] md:h-[26rem] lg:w-[30rem] lg:h-[30rem] rounded-full object-cover border-4 border-white shadow-2xl shadow-slate-900/10 relative z-10"
                             />
