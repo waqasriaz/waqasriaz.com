@@ -82,7 +82,7 @@ export default function BlogContent({
 
       {/* Posts Section */}
       <section className="bg-white pb-8">
-        <div className="max-w-4xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6">
           {/* Active Filter Indicator */}
           {activeCategoryName && (
             <div className="pt-6 text-sm text-slate-500">
@@ -127,7 +127,7 @@ export default function BlogContent({
 function FilterBarSkeleton() {
   return (
     <div className="sticky top-[72px] z-40 bg-white/95 backdrop-blur-lg border-b border-slate-100 shadow-sm">
-      <div className="max-w-4xl mx-auto px-6 py-4">
+      <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center gap-2">
           {[1, 2, 3, 4].map((i) => (
             <div

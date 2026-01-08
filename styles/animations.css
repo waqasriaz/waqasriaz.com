@@ -1341,14 +1341,13 @@
   height: 100%;
 }
 
-/* Post image clip-path reveal */
+/* Post image scale on hover */
 .post-image-reveal {
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .post-item:hover .post-image-reveal {
-  clip-path: inset(0 0 0 0);
+  transform: scale(1.05);
 }
 
 /* Filter pill fill animation */

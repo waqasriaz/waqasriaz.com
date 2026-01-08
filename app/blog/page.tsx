@@ -167,7 +167,7 @@ export default async function BlogPage({
       <main>
         {/* Hero Section - Minimal Typography Focus */}
         <section className="pt-32 pb-8 md:pt-40 md:pb-12 bg-white">
-          <div className="max-w-4xl mx-auto px-6">
+          <div className="max-w-7xl mx-auto px-6">
             <div className="hero-animate hero-animate-1">
               <h1 className="text-6xl md:text-8xl font-bold text-slate-900 tracking-tight">
                 Blog
