@@ -1261,3 +1261,244 @@
   outline: 3px solid #a78bfa;
   outline-offset: 4px;
 }
+
+/* ==========================================================================
+   Blog Page - Modern Micro-interactions
+   ========================================================================== */
+
+/* Gradient underline animation for blog title */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.blog-title-underline {
+  display: block;
+  height: 4px;
+  background: linear-gradient(90deg, #5b21b6, #c4b5fd, #5b21b6);
+  background-size: 200% 100%;
+  animation: gradientShift 3s ease-in-out infinite;
+  border-radius: 2px;
+  margin-top: 0.5rem;
+}
+
+/* Staggered fade-in on scroll */
+@keyframes staggerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.blog-stagger-item {
+  animation: staggerFadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+}
+
+.blog-stagger-item:nth-child(1) { animation-delay: 0.1s; }
+.blog-stagger-item:nth-child(2) { animation-delay: 0.2s; }
+.blog-stagger-item:nth-child(3) { animation-delay: 0.3s; }
+.blog-stagger-item:nth-child(4) { animation-delay: 0.4s; }
+.blog-stagger-item:nth-child(5) { animation-delay: 0.5s; }
+.blog-stagger-item:nth-child(6) { animation-delay: 0.6s; }
+
+/* Arrow slide animation on hover */
+@keyframes arrowSlide {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(6px); }
+}
+
+.post-arrow {
+  transition: transform 0.3s ease;
+}
+
+.post-item:hover .post-arrow {
+  animation: arrowSlide 0.6s ease-in-out infinite;
+}
+
+/* Post accent bar reveal */
+.post-item {
+  position: relative;
+}
+
+.post-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 0;
+  background: linear-gradient(180deg, #5b21b6, #c4b5fd);
+  border-radius: 2px;
+  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.post-item:hover::before {
+  height: 100%;
+}
+
+/* Post image clip-path reveal */
+.post-image-reveal {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.post-item:hover .post-image-reveal {
+  clip-path: inset(0 0 0 0);
+}
+
+/* Filter pill fill animation */
+.filter-pill {
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-pill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #5b21b6;
+  border-radius: inherit;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+
+.filter-pill:hover::before,
+.filter-pill.active::before {
+  transform: scaleX(1);
+}
+
+.filter-pill:hover,
+.filter-pill.active {
+  color: white;
+}
+
+/* Search modal overlay animation */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.search-modal-overlay {
+  animation: modalFadeIn 0.2s ease-out forwards;
+}
+
+.search-modal-content {
+  animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Newsletter section gradient animation */
+.newsletter-gradient {
+  background: linear-gradient(135deg, rgba(91, 33, 182, 0.03) 0%, rgba(196, 181, 253, 0.08) 50%, rgba(91, 33, 182, 0.03) 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease-in-out infinite;
+}
+
+/* Post number fade effect */
+.post-number {
+  transition: color 0.4s ease, transform 0.4s ease;
+}
+
+.post-item:hover .post-number {
+  color: rgba(91, 33, 182, 0.15);
+  transform: translateX(-5px);
+}
+
+/* ==========================================================================
+   Single Post Page - Reading Progress & Share Buttons
+   ========================================================================== */
+
+/* Reading progress bar */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 100;
+  background: rgba(91, 33, 182, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.reading-progress.visible {
+  opacity: 1;
+}
+
+.reading-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #5b21b6, #c4b5fd);
+  transition: width 0.1s ease-out;
+}
+
+/* Share button hover effects */
+.share-btn {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.share-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(91, 33, 182, 0.15);
+}
+
+/* Copy success checkmark animation */
+@keyframes copySuccess {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.copy-success-icon {
+  animation: copySuccess 0.3s ease forwards;
+}
+
+/* Related post card hover */
+.related-post-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.related-post-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Prose container for proper content width */
+.prose-container {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.prose-container pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.prose-container img {
+  max-width: 100%;
+  height: auto;
+}
+
+.prose-container code {
+  word-break: break-word;
+}

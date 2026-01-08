@@ -11,6 +11,10 @@ const statusStyles: Record<string, string> = {
   "call-scheduled": "bg-indigo-100 text-indigo-700",
   "proposal-sent": "bg-cyan-100 text-cyan-700",
   closed: "bg-slate-100 text-slate-700",
+  draft: "bg-slate-100 text-slate-700",
+  pending: "bg-amber-100 text-amber-700",
+  scheduled: "bg-indigo-100 text-indigo-700",
+  published: "bg-emerald-100 text-emerald-700",
 };
 
 const statusLabels: Record<string, string> = {
@@ -22,6 +26,10 @@ const statusLabels: Record<string, string> = {
   "call-scheduled": "Call Scheduled",
   "proposal-sent": "Proposal Sent",
   closed: "Closed",
+  draft: "Draft",
+  pending: "Pending",
+  scheduled: "Scheduled",
+  published: "Published",
 };
 
 export default function StatusBadge({ status }: StatusBadgeProps) {
