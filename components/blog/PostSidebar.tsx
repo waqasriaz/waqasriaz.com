@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import BlogLink from "./BlogLink";
 import ShareButtons from "./ShareButtons";
 
 interface Category {
@@ -60,7 +60,7 @@ export default function PostSidebar({ categories, post }: PostSidebarProps) {
         <ul className="space-y-3">
           {categories.map((category) => (
             <li key={category._id}>
-              <Link
+              <BlogLink
                 href={`/blog?category=${category.slug}`}
                 className={`flex items-center justify-between text-sm group ${
                   post.category?.slug === category.slug
@@ -78,7 +78,7 @@ export default function PostSidebar({ categories, post }: PostSidebarProps) {
                 <span className="text-slate-400 group-hover:text-[#5b21b6] transition-colors">
                   {category.postCount ?? 0}
                 </span>
-              </Link>
+              </BlogLink>
             </li>
           ))}
         </ul>

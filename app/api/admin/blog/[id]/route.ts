@@ -12,7 +12,7 @@ export async function GET(
     const { id } = await params;
 
     const post = await BlogPost.findById(id)
-      .populate("category", "name slug color")
+      .populate("categories", "name slug color")
       .populate("tags", "name slug");
 
     if (!post) {
@@ -45,7 +45,7 @@ export async function PATCH(
       "content",
       "featuredImage",
       "featuredImageAlt",
-      "category",
+      "categories",
       "tags",
       "status",
       "scheduledFor",
@@ -59,8 +59,6 @@ export async function PATCH(
       if (body[field] !== undefined) {
         if (field === "scheduledFor" && body[field]) {
           updateData[field] = new Date(body[field]);
-        } else if (field === "category" && !body[field]) {
-          updateData[field] = undefined;
         } else {
           updateData[field] = body[field];
         }
@@ -90,7 +88,7 @@ export async function PATCH(
     const post = await BlogPost.findByIdAndUpdate(id, updateData, {
       new: true,
     })
-      .populate("category", "name slug color")
+      .populate("categories", "name slug color")
       .populate("tags", "name slug");
 
     if (!post) {

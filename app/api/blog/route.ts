@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
 
     const [posts, total] = await Promise.all([
       BlogPost.find(query)
-        .populate("category", "name slug color")
+        .populate("categories", "name slug color")
         .sort({ publishedAt: -1 })
         .skip((page - 1) * limit)
         .limit(limit)

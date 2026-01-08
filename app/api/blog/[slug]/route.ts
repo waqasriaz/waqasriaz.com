@@ -14,7 +14,7 @@ export async function GET(
       slug,
       status: "published",
       publishedAt: { $lte: new Date() },
-    }).populate("category", "name slug color");
+    }).populate("categories", "name slug color");
 
     if (!post) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 });

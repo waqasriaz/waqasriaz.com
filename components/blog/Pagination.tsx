@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
+import { useBlogLoading } from "@/contexts/BlogLoadingContext";
 
 interface PaginationProps {
   pagination: {
@@ -14,12 +15,14 @@ interface PaginationProps {
 export default function Pagination({ pagination }: PaginationProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { startLoading } = useBlogLoading();
 
   if (pagination.totalPages <= 1) return null;
 
   const goToPage = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", page.toString());
+    startLoading();
     router.push(`/blog?${params.toString()}`);
   };
 

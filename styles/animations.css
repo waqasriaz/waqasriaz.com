@@ -1451,6 +1451,23 @@
   transition: width 0.1s ease-out;
 }
 
+/* Blog navigation loading bar */
+.blog-loading-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 9999;
+  background: rgba(91, 33, 182, 0.1);
+}
+
+.blog-loading-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #5b21b6, #c4b5fd);
+  transition: width 0.2s ease-out;
+}
+
 /* Share button hover effects */
 .share-btn {
   transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;

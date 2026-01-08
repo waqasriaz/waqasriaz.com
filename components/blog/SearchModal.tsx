@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import BlogLink from "./BlogLink";
+import { useBlogLoading } from "@/contexts/BlogLoadingContext";
 
 interface SearchResult {
   _id: string;
@@ -28,6 +29,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const { startLoading } = useBlogLoading();
 
   // Focus input when modal opens
   useEffect(() => {
@@ -73,6 +75,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
         }
         if (e.key === "Enter" && results[selectedIndex]) {
           e.preventDefault();
+          startLoading();
           router.push(`/blog/${results[selectedIndex].slug}`);
           onClose();
         }
@@ -81,7 +84,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose, results, selectedIndex, router]);
+  }, [isOpen, onClose, results, selectedIndex, router, startLoading]);
 
   // Search API call
   const searchPosts = useCallback(async (searchQuery: string) => {
@@ -180,7 +183,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
               <ul className="py-2">
                 {results.map((result, index) => (
                   <li key={result._id}>
-                    <Link
+                    <BlogLink
                       href={`/blog/${result.slug}`}
                       onClick={onClose}
                       className={`flex flex-col gap-1 px-6 py-4 transition-colors ${
@@ -202,7 +205,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       <span className="text-sm text-slate-500 line-clamp-1">
                         {result.excerpt}
                       </span>
-                    </Link>
+                    </BlogLink>
                   </li>
                 ))}
               </ul>

@@ -6,6 +6,7 @@ import PostItem from "@/components/blog/PostItem";
 import SearchModal from "@/components/blog/SearchModal";
 import NewsletterSection from "@/components/blog/NewsletterSection";
 import Pagination from "@/components/blog/Pagination";
+import { useBlogLoading } from "@/contexts/BlogLoadingContext";
 
 interface Category {
   _id: string;
@@ -22,7 +23,7 @@ interface Post {
   excerpt: string;
   content?: string;
   featuredImage?: string;
-  category?: Category;
+  categories?: Category[];
   publishedAt: string;
   author: string;
 }
@@ -49,6 +50,12 @@ export default function BlogContent({
   activeCategory,
 }: BlogContentProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const { stopLoading } = useBlogLoading();
+
+  // Stop loading bar when navigation completes (activeCategory changes)
+  useEffect(() => {
+    stopLoading();
+  }, [activeCategory, stopLoading]);
 
   // Global keyboard shortcut for search
   useEffect(() => {

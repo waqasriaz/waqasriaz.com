@@ -7,7 +7,7 @@ export interface IBlogPost extends Document {
   content: string;
   featuredImage?: string;
   featuredImageAlt?: string;
-  category?: mongoose.Types.ObjectId;
+  categories: mongoose.Types.ObjectId[];
   tags: mongoose.Types.ObjectId[];
   author: string;
   status: "draft" | "pending" | "scheduled" | "published";
@@ -27,7 +27,7 @@ const BlogPostSchema = new Schema<IBlogPost>(
     content: { type: String, required: true },
     featuredImage: { type: String, trim: true },
     featuredImageAlt: { type: String, trim: true },
-    category: { type: Schema.Types.ObjectId, ref: "Category" },
+    categories: [{ type: Schema.Types.ObjectId, ref: "Category" }],
     tags: [{ type: Schema.Types.ObjectId, ref: "Tag" }],
     author: { type: String, default: "Waqas Riaz", trim: true },
     status: {
@@ -47,7 +47,7 @@ const BlogPostSchema = new Schema<IBlogPost>(
 
 BlogPostSchema.index({ slug: 1 });
 BlogPostSchema.index({ status: 1, publishedAt: -1 });
-BlogPostSchema.index({ category: 1, status: 1 });
+BlogPostSchema.index({ categories: 1, status: 1 });
 BlogPostSchema.index({ scheduledFor: 1, status: 1 });
 BlogPostSchema.index({ tags: 1 });
 

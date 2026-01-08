@@ -1,12 +1,14 @@
 "use client";
 
+import { useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import BlogLink from "@/components/blog/BlogLink";
 import ReadingProgress from "@/components/blog/ReadingProgress";
 import PostContent from "@/components/blog/PostContent";
 import PostSidebar from "@/components/blog/PostSidebar";
 import RelatedPosts from "@/components/blog/RelatedPosts";
 import ShareButtons from "@/components/blog/ShareButtons";
+import { useBlogLoading } from "@/contexts/BlogLoadingContext";
 
 interface Category {
   _id: string;
@@ -69,6 +71,12 @@ export default function SinglePostContent({
   const postUrl = typeof window !== "undefined"
     ? `${window.location.origin}/blog/${post.slug}`
     : `/blog/${post.slug}`;
+  const { stopLoading } = useBlogLoading();
+
+  // Stop loading bar when navigation completes (post changes)
+  useEffect(() => {
+    stopLoading();
+  }, [post.slug, stopLoading]);
 
   return (
     <>
@@ -81,7 +89,7 @@ export default function SinglePostContent({
           <header className="pt-32 pb-8 bg-white">
             <div className="max-w-6xl mx-auto px-6">
               {/* Back Link */}
-              <Link
+              <BlogLink
                 href="/blog"
                 className="hero-animate hero-animate-1 inline-flex items-center gap-2 text-[#5b21b6] font-medium mb-8 hover:gap-3 transition-all"
               >
@@ -99,19 +107,19 @@ export default function SinglePostContent({
                   />
                 </svg>
                 Back to Blog
-              </Link>
+              </BlogLink>
 
               {/* Post Meta */}
               <div className="hero-animate hero-animate-2 flex flex-wrap items-center gap-3 text-sm text-slate-500 mb-6">
                 {post.category && (
                   <>
-                    <Link
+                    <BlogLink
                       href={`/blog?category=${post.category.slug}`}
                       className="px-3 py-1 rounded-full text-white hover:opacity-90 transition-opacity"
                       style={{ backgroundColor: post.category.color || "#5b21b6" }}
                     >
                       {post.category.name}
-                    </Link>
+                    </BlogLink>
                     <span>•</span>
                   </>
                 )}

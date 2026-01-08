@@ -23,7 +23,7 @@ interface Post {
   content: string;
   featuredImage?: string;
   featuredImageAlt?: string;
-  category?: CategoryData;
+  categories?: CategoryData[];
   author: string;
   publishedAt: string;
   metaTitle?: string;
@@ -36,7 +36,7 @@ interface RelatedPost {
   slug: string;
   excerpt: string;
   featuredImage?: string;
-  category?: CategoryData;
+  categories?: CategoryData[];
   publishedAt: string;
 }
 
@@ -49,7 +49,7 @@ async function getPost(slug: string): Promise<Post | null> {
       status: "published",
       publishedAt: { $lte: new Date() },
     })
-      .populate("category", "name slug color")
+      .populate("categories", "name slug color")
       .lean();
 
     if (!post) return null;
@@ -66,14 +66,12 @@ async function getPost(slug: string): Promise<Post | null> {
       publishedAt: post.publishedAt?.toISOString() || new Date().toISOString(),
       metaTitle: post.metaTitle,
       metaDescription: post.metaDescription,
-      category: post.category
-        ? {
-            _id: post.category._id.toString(),
-            name: post.category.name,
-            slug: post.category.slug,
-            color: post.category.color || "#5b21b6",
-          }
-        : undefined,
+      categories: post.categories?.map((cat: { _id: { toString: () => string }; name: string; slug: string; color?: string }) => ({
+        _id: cat._id.toString(),
+        name: cat.name,
+        slug: cat.slug,
+        color: cat.color || "#5b21b6",
+      })),
     };
   } catch (error) {
     console.error("Post fetch error:", error);
@@ -81,7 +79,7 @@ async function getPost(slug: string): Promise<Post | null> {
   }
 }
 
-async function getRelatedPosts(currentSlug: string, categoryId?: string): Promise<RelatedPost[]> {
+async function getRelatedPosts(currentSlug: string, categoryIds?: string[]): Promise<RelatedPost[]> {
   try {
     await connectDB();
 
@@ -91,18 +89,18 @@ async function getRelatedPosts(currentSlug: string, categoryId?: string): Promis
       publishedAt: { $lte: new Date() },
     };
 
-    if (categoryId) {
-      query.category = categoryId;
+    if (categoryIds && categoryIds.length > 0) {
+      query.categories = { $in: categoryIds };
     }
 
     let posts = await BlogPost.find(query)
-      .populate("category", "name slug color")
+      .populate("categories", "name slug color")
       .sort({ publishedAt: -1 })
       .limit(3)
       .lean();
 
-    // If not enough posts in category, get recent posts
-    if (posts.length < 3 && categoryId) {
+    // If not enough posts in categories, get recent posts
+    if (posts.length < 3 && categoryIds && categoryIds.length > 0) {
       const additionalQuery: Record<string, unknown> = {
         status: "published",
         slug: { $ne: currentSlug },
@@ -111,7 +109,7 @@ async function getRelatedPosts(currentSlug: string, categoryId?: string): Promis
       };
 
       const additionalPosts = await BlogPost.find(additionalQuery)
-        .populate("category", "name slug color")
+        .populate("categories", "name slug color")
         .sort({ publishedAt: -1 })
         .limit(3 - posts.length)
         .lean();
@@ -126,14 +124,12 @@ async function getRelatedPosts(currentSlug: string, categoryId?: string): Promis
       excerpt: post.excerpt,
       featuredImage: post.featuredImage,
       publishedAt: post.publishedAt?.toISOString() || new Date().toISOString(),
-      category: post.category
-        ? {
-            _id: post.category._id.toString(),
-            name: post.category.name,
-            slug: post.category.slug,
-            color: post.category.color || "#5b21b6",
-          }
-        : undefined,
+      categories: post.categories?.map((cat: { _id: { toString: () => string }; name: string; slug: string; color?: string }) => ({
+        _id: cat._id.toString(),
+        name: cat.name,
+        slug: cat.slug,
+        color: cat.color || "#5b21b6",
+      })),
     }));
   } catch (error) {
     console.error("Related posts fetch error:", error);
@@ -155,7 +151,7 @@ async function getCategories(): Promise<CategoryData[]> {
       categories.map(async (category) => {
         const postCount = await BlogPost.countDocuments({
           ...publishedQuery,
-          category: category._id,
+          categories: category._id,
         });
         return {
           _id: category._id.toString(),
@@ -216,7 +212,7 @@ export default async function BlogPostPage({
 
   const [categories, relatedPosts] = await Promise.all([
     getCategories(),
-    getRelatedPosts(slug, post.category?._id),
+    getRelatedPosts(slug, post.categories?.map((c) => c._id)),
   ]);
 
   return (

@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
+import { Fragment } from "react";
+import BlogLink from "./BlogLink";
 import Image from "next/image";
-import { useMagneticHover } from "@/hooks";
 
 interface Category {
   _id: string;
@@ -19,7 +19,7 @@ interface PostItemProps {
     excerpt: string;
     content?: string;
     featuredImage?: string;
-    category?: Category;
+    categories?: Category[];
     publishedAt: string;
     author: string;
   };
@@ -27,8 +27,6 @@ interface PostItemProps {
 }
 
 export default function PostItem({ post, index }: PostItemProps) {
-  const { ref, style } = useMagneticHover({ strength: 0.08 });
-
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       month: "short",
@@ -48,12 +46,8 @@ export default function PostItem({ post, index }: PostItemProps) {
   const postNumber = String(index + 1).padStart(2, "0");
 
   return (
-    <Link href={`/blog/${post.slug}`} className="block group">
-      <article
-        ref={ref}
-        style={style}
-        className="post-item relative py-10 md:py-12 pl-4 md:pl-20 pr-4 border-b border-slate-100 transition-colors hover:bg-slate-50/50"
-      >
+    <BlogLink href={`/blog/${post.slug}`} className="block group">
+      <article className="post-item relative py-10 md:py-12 pl-4 md:pl-20 pr-4 border-b border-slate-100 transition-colors hover:bg-slate-50/50">
         {/* Large Editorial Number */}
         <span className="post-number absolute left-0 top-8 md:top-10 text-5xl md:text-6xl font-black text-[rgba(91,33,182,0.06)] select-none hidden md:block">
           {postNumber}
@@ -64,10 +58,20 @@ export default function PostItem({ post, index }: PostItemProps) {
           <div className="flex-1 min-w-0">
             {/* Meta Row */}
             <div className="flex flex-wrap items-center gap-3 mb-4">
-              {post.category && (
-                <span className="text-sm font-medium text-[#5b21b6]">
-                  {post.category.name}
-                </span>
+              {post.categories && post.categories.length > 0 && (
+                <div className="flex flex-wrap items-center">
+                  {post.categories.map((cat, idx) => (
+                    <Fragment key={cat._id}>
+                      {idx > 0 && <span className="text-slate-300 mx-1.5">•</span>}
+                      <span
+                        className="text-sm font-medium"
+                        style={{ color: cat.color }}
+                      >
+                        {cat.name}
+                      </span>
+                    </Fragment>
+                  ))}
+                </div>
               )}
               <span className="text-sm text-slate-400">
                 {formatDate(post.publishedAt)}
@@ -121,6 +125,6 @@ export default function PostItem({ post, index }: PostItemProps) {
           )}
         </div>
       </article>
-    </Link>
+    </BlogLink>
   );
 }

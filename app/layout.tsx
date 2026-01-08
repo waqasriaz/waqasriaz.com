@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { BlogLoadingProvider } from "@/contexts/BlogLoadingContext";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -71,7 +72,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} font-sans antialiased`} suppressHydrationWarning>
-        {children}
+        <BlogLoadingProvider>
+          {children}
+        </BlogLoadingProvider>
       </body>
     </html>
   );

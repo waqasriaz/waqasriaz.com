@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useState, useEffect, useRef, useTransition } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useBlogLoading } from "@/contexts/BlogLoadingContext";
 
 interface Category {
   _id: string;
@@ -20,10 +20,13 @@ interface FilterBarProps {
 const MAX_VISIBLE_CATEGORIES = 5;
 
 export default function FilterBar({ categories, onSearchClick }: FilterBarProps) {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const activeCategory = searchParams.get("category");
   const [showMore, setShowMore] = useState(false);
+  const [isPending, startTransition] = useTransition();
   const moreRef = useRef<HTMLDivElement>(null);
+  const { startLoading } = useBlogLoading();
 
   // Split categories into visible and overflow
   const visibleCategories = categories.slice(0, MAX_VISIBLE_CATEGORIES);
@@ -56,14 +59,23 @@ export default function FilterBar({ categories, onSearchClick }: FilterBarProps)
     return queryString ? `/blog?${queryString}` : "/blog";
   };
 
+  const navigateToCategory = (slug?: string) => {
+    const url = buildCategoryUrl(slug);
+    startLoading();
+    startTransition(() => {
+      router.push(url);
+    });
+  };
+
   return (
     <div className="sticky top-16 z-40 bg-white/95 backdrop-blur-lg border-b border-slate-100 shadow-sm">
       <div className="max-w-4xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between gap-4">
           {/* Category Pills */}
-          <div className="flex items-center gap-3">
-            <Link
-              href={buildCategoryUrl()}
+          <div className={`flex items-center gap-3 transition-opacity ${isPending ? "opacity-60" : ""}`}>
+            <button
+              onClick={() => navigateToCategory()}
+              disabled={isPending}
               className={`filter-pill px-4 py-2 text-sm font-medium rounded-full whitespace-nowrap transition-colors ${
                 !activeCategory
                   ? "active bg-[#5b21b6] text-white"
@@ -71,11 +83,12 @@ export default function FilterBar({ categories, onSearchClick }: FilterBarProps)
               }`}
             >
               All
-            </Link>
+            </button>
             {visibleCategories.map((category) => (
-              <Link
+              <button
                 key={category._id}
-                href={buildCategoryUrl(category.slug)}
+                onClick={() => navigateToCategory(category.slug)}
+                disabled={isPending}
                 className={`filter-pill px-4 py-2 text-sm font-medium rounded-full whitespace-nowrap transition-colors ${
                   activeCategory === category.slug
                     ? "active bg-[#5b21b6] text-white"
@@ -83,7 +96,7 @@ export default function FilterBar({ categories, onSearchClick }: FilterBarProps)
                 }`}
               >
                 {category.name}
-              </Link>
+              </button>
             ))}
 
             {/* More Dropdown */}
@@ -117,18 +130,21 @@ export default function FilterBar({ categories, onSearchClick }: FilterBarProps)
                 {showMore && (
                   <div className="absolute top-full left-0 mt-2 py-2 bg-white rounded-xl shadow-lg border border-slate-100 min-w-[180px] z-50">
                     {overflowCategories.map((category) => (
-                      <Link
+                      <button
                         key={category._id}
-                        href={buildCategoryUrl(category.slug)}
-                        onClick={() => setShowMore(false)}
-                        className={`block px-4 py-2.5 text-sm transition-colors ${
+                        onClick={() => {
+                          setShowMore(false);
+                          navigateToCategory(category.slug);
+                        }}
+                        disabled={isPending}
+                        className={`block w-full text-left px-4 py-2.5 text-sm transition-colors ${
                           activeCategory === category.slug
                             ? "bg-[#5b21b6]/10 text-[#5b21b6] font-medium"
                             : "text-slate-600 hover:bg-slate-50 hover:text-[#5b21b6]"
                         }`}
                       >
                         {category.name}
-                      </Link>
+                      </button>
                     ))}
                   </div>
                 )}

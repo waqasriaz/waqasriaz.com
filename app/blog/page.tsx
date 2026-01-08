@@ -26,7 +26,7 @@ interface Post {
   excerpt: string;
   content?: string;
   featuredImage?: string;
-  category?: CategoryData;
+  categories?: CategoryData[];
   publishedAt: string;
   author: string;
 }
@@ -58,7 +58,7 @@ async function getBlogPosts(
     if (categorySlug) {
       const category = await Category.findOne({ slug: categorySlug });
       if (category) {
-        query.category = category._id;
+        query.categories = category._id;
       }
     }
 
@@ -71,7 +71,7 @@ async function getBlogPosts(
 
     const [posts, total] = await Promise.all([
       BlogPost.find(query)
-        .populate("category", "name slug color")
+        .populate("categories", "name slug color")
         .sort({ publishedAt: -1 })
         .skip((page - 1) * limit)
         .limit(limit)
@@ -88,14 +88,12 @@ async function getBlogPosts(
       featuredImage: post.featuredImage,
       publishedAt: post.publishedAt?.toISOString() || new Date().toISOString(),
       author: post.author,
-      category: post.category
-        ? {
-            _id: post.category._id.toString(),
-            name: post.category.name,
-            slug: post.category.slug,
-            color: post.category.color,
-          }
-        : undefined,
+      categories: post.categories?.map((cat: { _id: { toString: () => string }; name: string; slug: string; color?: string }) => ({
+        _id: cat._id.toString(),
+        name: cat.name,
+        slug: cat.slug,
+        color: cat.color || "#5b21b6",
+      })),
     }));
 
     return {
@@ -127,7 +125,7 @@ async function getCategories(): Promise<CategoryData[]> {
       categories.map(async (category) => {
         const postCount = await BlogPost.countDocuments({
           ...publishedQuery,
-          category: category._id,
+          categories: category._id,
         });
         return {
           _id: category._id.toString(),

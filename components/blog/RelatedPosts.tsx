@@ -1,4 +1,6 @@
-import Link from "next/link";
+"use client";
+
+import BlogLink from "./BlogLink";
 import Image from "next/image";
 
 interface Category {
@@ -42,7 +44,7 @@ export default function RelatedPosts({ posts }: RelatedPostsProps) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map((post) => (
-            <Link
+            <BlogLink
               key={post._id}
               href={`/blog/${post.slug}`}
               className="related-post-card group bg-white rounded-2xl overflow-hidden"
@@ -105,7 +107,7 @@ export default function RelatedPosts({ posts }: RelatedPostsProps) {
                   </svg>
                 </div>
               </div>
-            </Link>
+            </BlogLink>
           ))}
         </div>
       </div>

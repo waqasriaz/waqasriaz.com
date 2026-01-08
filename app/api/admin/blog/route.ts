@@ -11,7 +11,7 @@ const postSchema = z.object({
   content: z.string().min(1, "Content is required"),
   featuredImage: z.string().optional(),
   featuredImageAlt: z.string().optional(),
-  category: z.string().optional(),
+  categories: z.array(z.string()).default([]),
   tags: z.array(z.string()).default([]),
   status: z.enum(["draft", "pending", "scheduled", "published"]),
   scheduledFor: z.string().optional(),
@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
 
     const [posts, total] = await Promise.all([
       BlogPost.find(query)
-        .populate("category", "name slug color")
+        .populate("categories", "name slug color")
         .populate("tags", "name slug")
         .sort({ createdAt: -1 })
         .skip((page - 1) * limit)
@@ -91,7 +91,6 @@ export async function POST(request: NextRequest) {
       scheduledFor: validated.scheduledFor
         ? new Date(validated.scheduledFor)
         : undefined,
-      category: validated.category || undefined,
     };
 
     const post = await BlogPost.create(postData);

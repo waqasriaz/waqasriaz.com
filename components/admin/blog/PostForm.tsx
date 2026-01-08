@@ -47,7 +47,7 @@ export default function PostForm({ postId }: PostFormProps) {
   const [content, setContent] = useState("");
   const [featuredImage, setFeaturedImage] = useState("");
   const [featuredImageAlt, setFeaturedImageAlt] = useState("");
-  const [category, setCategory] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [status, setStatus] = useState<
     "draft" | "pending" | "scheduled" | "published"
   >("draft");
@@ -57,6 +57,8 @@ export default function PostForm({ postId }: PostFormProps) {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
+  const [newTagName, setNewTagName] = useState("");
+  const [savingTag, setSavingTag] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -82,7 +84,7 @@ export default function PostForm({ postId }: PostFormProps) {
             setContent(post.content);
             setFeaturedImage(post.featuredImage || "");
             setFeaturedImageAlt(post.featuredImageAlt || "");
-            setCategory(post.category?._id || "");
+            setSelectedCategories(post.categories?.map((c: Category | string) => typeof c === 'string' ? c : c._id) || []);
             setStatus(post.status);
             setScheduledFor(
               post.scheduledFor
@@ -111,6 +113,73 @@ export default function PostForm({ postId }: PostFormProps) {
     }
   }, [title, slugManuallyEdited]);
 
+  function handleCategoryCreated(newCategory: Category) {
+    setCategories([...categories, newCategory]);
+    setSelectedCategories([...selectedCategories, newCategory._id]);
+  }
+
+  async function createTag() {
+    if (!newTagName.trim()) return;
+
+    // Split by comma and filter empty strings
+    const tagNames = newTagName
+      .split(",")
+      .map((t) => t.trim())
+      .filter((t) => t.length > 0);
+
+    if (tagNames.length === 0) return;
+
+    setSavingTag(true);
+    const newTagIds: string[] = [];
+    const newTags: Tag[] = [];
+
+    try {
+      for (const tagName of tagNames) {
+        // Check if tag already exists
+        const existingTag = availableTags.find(
+          (t) => t.name.toLowerCase() === tagName.toLowerCase()
+        );
+
+        if (existingTag) {
+          // Tag exists, just select it if not already selected
+          if (!selectedTags.includes(existingTag._id)) {
+            newTagIds.push(existingTag._id);
+          }
+          continue;
+        }
+
+        // Create new tag
+        const response = await fetch("/api/admin/tags", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: tagName,
+            slug: generateSlug(tagName),
+          }),
+        });
+
+        if (response.ok) {
+          const newTag = await response.json();
+          newTags.push(newTag);
+          newTagIds.push(newTag._id);
+        }
+      }
+
+      if (newTags.length > 0) {
+        setAvailableTags([...availableTags, ...newTags]);
+      }
+      if (newTagIds.length > 0) {
+        setSelectedTags([...selectedTags, ...newTagIds]);
+      }
+      setNewTagName("");
+    } catch (error) {
+      console.error("Failed to create tags:", error);
+      alert("Failed to create tags");
+    } finally {
+      setSavingTag(false);
+    }
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
@@ -129,7 +198,7 @@ export default function PostForm({ postId }: PostFormProps) {
         content,
         featuredImage: featuredImage || undefined,
         featuredImageAlt: featuredImageAlt || undefined,
-        category: category || undefined,
+        categories: selectedCategories,
         tags: selectedTags,
         status,
         scheduledFor: scheduledFor || undefined,
@@ -253,15 +322,8 @@ export default function PostForm({ postId }: PostFormProps) {
                 <label className="block text-sm font-medium text-slate-700 mb-2">
                   Tags
                 </label>
-                {availableTags.length === 0 ? (
-                  <p className="text-sm text-slate-500 py-2">
-                    No tags available.{" "}
-                    <a href="/admin/tags" className="text-[#5b21b6] hover:underline">
-                      Create tags first
-                    </a>
-                  </p>
-                ) : (
-                  <div className="flex flex-wrap gap-2">
+                {availableTags.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mb-3">
                     {availableTags.map((tag) => {
                       const isSelected = selectedTags.includes(tag._id);
                       return (
@@ -287,8 +349,33 @@ export default function PostForm({ postId }: PostFormProps) {
                     })}
                   </div>
                 )}
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={newTagName}
+                    onChange={(e) => setNewTagName(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), createTag())}
+                    placeholder="Add tags (comma separated)..."
+                    className="flex-1 px-3 py-2 rounded-lg border border-slate-200 focus:border-[#5b21b6] focus:ring-2 focus:ring-[#5b21b6]/20 outline-none transition-all text-sm"
+                  />
+                  <button
+                    type="button"
+                    onClick={createTag}
+                    disabled={savingTag || !newTagName.trim()}
+                    className="px-3 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors disabled:opacity-50"
+                    title="Add tag"
+                  >
+                    {savingTag ? (
+                      <div className="w-5 h-5 border-2 border-slate-400 border-t-transparent rounded-full animate-spin" />
+                    ) : (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
                 <p className="text-xs text-slate-500 mt-2">
-                  Click to select/deselect tags
+                  Click to select/deselect. Add multiple tags with commas.
                 </p>
               </div>
             </div>
@@ -307,13 +394,14 @@ export default function PostForm({ postId }: PostFormProps) {
             <PublishSettings
               status={status}
               scheduledFor={scheduledFor}
-              category={category}
+              selectedCategories={selectedCategories}
               categories={categories}
               metaTitle={metaTitle}
               metaDescription={metaDescription}
               onStatusChange={setStatus}
               onScheduledForChange={setScheduledFor}
-              onCategoryChange={setCategory}
+              onCategoriesChange={setSelectedCategories}
+              onCategoryCreated={handleCategoryCreated}
               onMetaTitleChange={setMetaTitle}
               onMetaDescriptionChange={setMetaDescription}
             />

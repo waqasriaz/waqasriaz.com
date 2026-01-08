@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useHeaderScroll } from "@/hooks/useHeaderScroll";
+import { useBlogLoading } from "@/contexts/BlogLoadingContext";
 import MobileNav from "./MobileNav";
 
 const navLinks = [
@@ -18,6 +19,7 @@ export default function Header() {
   const pathname = usePathname();
   const { isScrolled } = useHeaderScroll();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { startLoading } = useBlogLoading();
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -115,6 +117,7 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
+                  onClick={link.href === "/blog" ? () => startLoading() : undefined}
                   className={`text-sm font-medium tracking-wider transition-colors ${
                     pathname === link.href
                       ? "text-[#5b21b6]"
