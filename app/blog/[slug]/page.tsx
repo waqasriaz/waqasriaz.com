@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Header, Footer } from "@/components/layout";
+import { JsonLd } from "@/components/seo";
 import SinglePostContent from "./SinglePostContent";
 import connectDB from "@/lib/mongodb";
 import BlogPost from "@/models/BlogPost";
@@ -215,8 +216,38 @@ export default async function BlogPostPage({
     getRelatedPosts(slug, post.categories?.map((c) => c._id)),
   ]);
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://waqasriaz.com";
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.metaDescription || post.excerpt,
+    image: post.featuredImage || `${baseUrl}/images/waqasriaz.jpeg`,
+    datePublished: post.publishedAt,
+    dateModified: post.publishedAt,
+    author: {
+      "@type": "Person",
+      name: post.author,
+      url: baseUrl,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Waqas Riaz",
+      logo: {
+        "@type": "ImageObject",
+        url: `${baseUrl}/images/waqasriaz.jpeg`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${baseUrl}/blog/${post.slug}`,
+    },
+  };
+
   return (
     <>
+      <JsonLd data={articleSchema} />
       <Header />
       <SinglePostContent
         post={post}

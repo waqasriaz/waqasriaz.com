@@ -3,7 +3,7 @@ import { Header, Footer } from "@/components/layout";
 import ContactForm from "@/components/forms/ContactForm";
 
 export const metadata: Metadata = {
-  title: "Contact",
+  title: "Contact - Waqas Riaz | Software Developer",
   description:
     "Get in touch with Waqas Riaz. Let's discuss your project and how I can help bring your ideas to life.",
 };

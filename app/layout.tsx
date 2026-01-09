@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { BlogLoadingProvider } from "@/contexts/BlogLoadingContext";
 import BlogLoadingBar from "@/components/blog/BlogLoadingBar";
+import { JsonLd } from "@/components/seo";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -65,6 +66,28 @@ export const metadata: Metadata = {
   },
 };
 
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Waqas Riaz",
+  url: "https://waqasriaz.com",
+  logo: "https://waqasriaz.com/images/waqasriaz.jpeg",
+  description:
+    "Software Developer & Product Builder. Creator of Houzez and Homey WordPress themes.",
+  founder: {
+    "@type": "Person",
+    name: "Waqas Riaz",
+    url: "https://waqasriaz.com",
+    jobTitle: "Software Developer & Product Builder",
+    image: "https://waqasriaz.com/images/waqasriaz.jpeg",
+  },
+  sameAs: [
+    "https://twitter.com/mwaqasriaz",
+    "https://github.com/mwaqasriaz",
+    "https://linkedin.com/in/mwaqasriaz",
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -72,6 +95,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <JsonLd data={organizationSchema} />
+      </head>
       <body className={`${inter.variable} font-sans antialiased`} suppressHydrationWarning>
         <BlogLoadingProvider>
           <BlogLoadingBar />

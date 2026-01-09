@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Header, Footer } from "@/components/layout";
 import { ScrollAnimator } from "@/components/animations";
 import { FAQAccordion } from "@/components/ui/FAQAccordion";
+import { JsonLd } from "@/components/seo";
 
 export const metadata: Metadata = {
   title: "Houzez Consulting",
@@ -103,9 +104,23 @@ const faqs = [
   },
 ];
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
+
 export default function HouzezPage() {
   return (
     <>
+      <JsonLd data={faqSchema} />
       <Header />
       <main>
         {/* Hero Section */}
