@@ -69,7 +69,7 @@ export default function FilterBar({ categories, onSearchClick }: FilterBarProps)
 
   return (
     <div className="sticky top-16 z-40 bg-white/95 backdrop-blur-lg border-b border-slate-100 shadow-sm">
-      <div className="max-w-4xl mx-auto px-6 py-4">
+      <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between gap-4">
           {/* Category Pills */}
           <div className={`flex items-center gap-3 transition-opacity ${isPending ? "opacity-60" : ""}`}>
